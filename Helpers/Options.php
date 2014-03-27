@@ -115,7 +115,7 @@ class Options
 
 	private function getValueOrDefault($index, $default)
 	{
-		return isset($this->options[$index]) ?: $default;
+		return array_key_exists($index, $this->options) ? $this->options[$index] : $default;
 	}
 
 }
