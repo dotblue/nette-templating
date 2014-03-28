@@ -23,10 +23,10 @@ class Caller
 	/**
 	 * Allows calling registered helpers depending on locale.
 	 *
-	 * @param  ILocale
+	 * @param  mixed
 	 * @param  callable
 	 */
-	public function callWithLocalization(ILocale $locale, $callback)
+	public function callWithLocalization($locale, $callback)
 	{
 		$originalLocale = $this->registry->getLocale();
 		$this->registry->setLocale($locale);
