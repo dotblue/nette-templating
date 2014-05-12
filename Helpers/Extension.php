@@ -24,6 +24,7 @@ class Extension extends DI\CompilerExtension
 			->setClass('DotBlue\Templating\Helpers\Caller')
 			->setFactory($this->prefix('@registry') . '::getCaller');
 
+		$latte = $container->getDefinition('nette.latteFactory');
 		foreach ($config as $name => $helper) {
 			$this->compiler->parseServices($container, [
 				'services' => [
@@ -33,10 +34,14 @@ class Extension extends DI\CompilerExtension
 			$helpers->addSetup('addHelper', [
 				$this->prefix('@' . $name),
 			]);
+			$latte->addSetup('$service->addFilter(?->getName(), ?->loader(?->getName()))', [
+				$this->prefix('@' . $name),
+				$this->prefix('@registry'),
+				$this->prefix('@' . $name),
+			]);
 		}
 
-		$latte = $container->getDefinition('nette.latte');
-		$latte->addSetup('DotBlue\Templating\Helpers\Macros::install(?->compiler)', array('@self'));
+		$latte->addSetup('DotBlue\Templating\Helpers\Macros::install(?->getCompiler())', array('@self'));
 	}
 
 }

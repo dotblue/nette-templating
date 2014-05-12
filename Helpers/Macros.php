@@ -6,7 +6,7 @@
 
 namespace DotBlue\Templating\Helpers;
 
-use Nette\Latte;
+use Latte;
 
 
 class Macros extends Latte\Macros\MacroSet
